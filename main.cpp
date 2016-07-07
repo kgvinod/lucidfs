@@ -7,25 +7,31 @@ int main()
 {
 
     // Directory tests
-    DirFsNode* root_node = new DirFsNode("/");
-    DirFsNode* home_node = root_node->mkdir("home");
-    DirFsNode* etc_node = root_node->mkdir("etc");
-    DirFsNode* bin_node = root_node->mkdir("bin");
-    DirFsNode* usr_node = root_node->mkdir("usr");
-    DirFsNode* opt_node = root_node->mkdir("opt");
+    DirFsNode* root_dir = new DirFsNode("/");
+    DirFsNode* home_dir = root_dir->mkdir("home");
+    DirFsNode* etc_dir = root_dir->mkdir("etc");
+    DirFsNode* bin_dir = root_dir->mkdir("bin");
+    DirFsNode* usr_dir = root_dir->mkdir("usr");
+    DirFsNode* opt_dir = root_dir->mkdir("opt");
     
-    DirFsNode* doc_node = home_node->mkdir("Documents");
-    DirFsNode* vid_node = home_node->mkdir("Videos");       
-    DirFsNode* pic_node = home_node->mkdir("Pictures"); 
+    DirFsNode* doc_dir = home_dir->mkdir("Documents");
+    DirFsNode* vid_dir = home_dir->mkdir("Videos");       
+    DirFsNode* pic_dir = home_dir->mkdir("Pictures"); 
 
-    DirFsNode* usr_loc_node = usr_node->mkdir("local");
-    DirFsNode* usr_lib_node = usr_node->mkdir("lib");       
-    DirFsNode* usr_bin_node = usr_node->mkdir("bin");  
+    DirFsNode* usr_loc_dir = usr_dir->mkdir("local");
+    DirFsNode* usr_lib_dir = usr_dir->mkdir("lib");       
+    DirFsNode* usr_bin_dir = usr_dir->mkdir("bin");  
     
     // File tests   
-    FileFsNode* file1 = doc_node->fopen("cover_letter.doc");
+    FileFsNode* file1 = doc_dir->fopen("cover_letter.doc");
+    FileFsNode* file2 = pic_dir->fopen("sunset.jpg");
+    FileFsNode* file3 = vid_dir->fopen("movie.mp4");
+    
+    // Link tests
+    LnkFsNode* lnk1 = home_dir->mklnk("cover_letter", file1);  
+    LnkFsNode* lnk2 = home_dir->mklnk("user_lib", usr_lib_dir);        
      
-    root_node->printNodes();
+    root_dir->printNodes();
 
     return 0;
 }

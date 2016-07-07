@@ -7,12 +7,13 @@
 class LnkFsNode : public FsNode {
 
     public:
-        LnkFsNode(std::string _name) : FsNode{_name} {};
+        LnkFsNode(std::string _name, FsNode* _lnk) : FsNode{_name}, lnk{_lnk} {};
         ~LnkFsNode();
         std::string getTypeStr() {return "-l-";}
+        void printNodes();
         
     private:    
-        FsNode * lnk;
+        FsNode* lnk;
 };
 
 #endif

@@ -19,7 +19,7 @@ INCLUDES = -I.
 #LIBS = -lpthread
 
 # Source files
-SRCS = main.cpp dirfsnode.cpp
+SRCS = main.cpp fsnode.cpp dirfsnode.cpp filefsnode.cpp lnkfsnode.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

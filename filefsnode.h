@@ -12,6 +12,7 @@ class FileFsNode : public FsNode {
         int write(const char * data);
         int read(char *data, int offset, int count);
         std::string getTypeStr() {return "-f-";}
+        void printNodes();
         
         
     private:    
