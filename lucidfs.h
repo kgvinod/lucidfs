@@ -1,4 +1,13 @@
-// A directory node has a collection of nodes
+/**
+ * @file   lucidfs.h
+ * @Author Vinod Gopalan (kgvinod@gmail.com)
+ * @date   July, 2016
+ * @brief  A simple mock file system
+ *
+ * A simple filesystem to demonstrate use of C++ to create a object oriented
+ * file system
+ */
+
 #ifndef LUCIDFS_H
 #define LUCIDFS_H
 

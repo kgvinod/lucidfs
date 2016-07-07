@@ -1,4 +1,13 @@
-// A directory node has a collection of nodes
+/**
+ * @file   dirfsnode.h
+ * @Author Vinod Gopalan (kgvinod@gmail.com)
+ * @date   July, 2016
+ * @brief  A directory node
+ *
+ * This class represents a directory node that can contain a collection of 
+ * sub nodes, which in turn can be a directory, file or a link
+ */
+ 
 #ifndef DIRFSNODE_H
 #define DIRFSNODE_H
 
@@ -40,7 +49,7 @@ class DirFsNode : public FsNode {
     private:    
     
         // Private methods
-        FsNode* isNodeExist(std::string node_name);
+        bool isNodeExist(std::string node_name);
     
         // Private variables
         std::vector<FsNode *> nodeList;
