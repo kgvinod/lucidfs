@@ -1,3 +1,4 @@
+#include "lucidfs.h"
 #include "fsnode.h"
 #include "dirfsnode.h"
 #include "filefsnode.h"
@@ -6,8 +7,11 @@
 int main() 
 {
 
+    // Create filesystem with "/" as the root node
+    LucidFS* lfs = new LucidFS();
+    DirFsNode* root_dir = lfs->init("/");
+
     // Directory tests
-    DirFsNode* root_dir = new DirFsNode("/");
     DirFsNode* home_dir = root_dir->mkdir("home");
     DirFsNode* etc_dir = root_dir->mkdir("etc");
     DirFsNode* bin_dir = root_dir->mkdir("bin");
