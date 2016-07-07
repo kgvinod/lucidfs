@@ -6,8 +6,8 @@
 
 class FsNode {
     public:
-        FsNode() : size{0} {}
-        ~FsNode();
+        FsNode(std::string _name) : name{_name}, size{0} {}
+        ~FsNode() {};
         int getSize() {return size;};
     
     private:

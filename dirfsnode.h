@@ -11,30 +11,36 @@
 class DirFsNode : public FsNode {
 
     public:
-        DirFsNode();
+        DirFsNode(std::string _name) : FsNode{_name} {};
         ~DirFsNode();
         
         // Add a directory
-        DirFsNode & mkdir(std::string new_dir);
+        DirFsNode * mkdir(std::string new_dir);
         
         // Add a file
-        FileFsNode & fopen(std::string new_file);
+        FileFsNode * fopen(std::string new_file);
         
         // Create a link to another node
-        LnkFsNode & mklnk(FsNode node);
+        LnkFsNode * mklnk(FsNode node);
         
         // Return the first node in the directory
-        FsNode & getFirstNode() {return nodeList[0];}
+        FsNode * getFirstNode() {return nodeList[0];}
         
         // Given a node in a directory return the 
         // next node in the directory
-        FsNode & getNextNode(int fd);
+        FsNode * getNextNode(int fd);
         
         // Get all nodes
         
         
     private:    
-        std::vector<FsNode> nodeList;
+    
+        // Private methods
+        FsNode* isNodeExist(std::string node_name);
+    
+        // Private variables
+        std::vector<FsNode *> nodeList;
+        DirFsNode *parent; 
 };
 
 #endif
