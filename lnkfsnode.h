@@ -7,8 +7,9 @@
 class LnkFsNode : public FsNode {
 
     public:
-        LnkFsNode();
+        LnkFsNode(std::string _name) : FsNode{_name} {};
         ~LnkFsNode();
+        std::string getTypeStr() {return "-l-";}
         
     private:    
         FsNode * lnk;

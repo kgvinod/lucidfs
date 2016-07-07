@@ -21,7 +21,7 @@ class DirFsNode : public FsNode {
         FileFsNode * fopen(std::string new_file);
         
         // Create a link to another node
-        LnkFsNode * mklnk(FsNode node);
+        LnkFsNode * mklnk(FsNode *node);
         
         // Return the first node in the directory
         FsNode * getFirstNode() {return nodeList[0];}
@@ -30,7 +30,11 @@ class DirFsNode : public FsNode {
         // next node in the directory
         FsNode * getNextNode(int fd);
         
-        // Get all nodes
+        // Print all nodes
+        void printNodes();
+        
+        // Get the type of node
+        std::string getTypeStr() {return "-d-";}
         
         
     private:    
@@ -40,7 +44,7 @@ class DirFsNode : public FsNode {
     
         // Private variables
         std::vector<FsNode *> nodeList;
-        DirFsNode *parent; 
+
 };
 
 #endif
