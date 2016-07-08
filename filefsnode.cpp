@@ -32,7 +32,7 @@ int FileFsNode::write(const unsigned char * data, int size)
         
             std::cout << __FUNCTION__ << " : Filling " << (BLOCK_SZ - block->size) << " bytes \n";        
                 
-            memcpy((void*)block->data + block->size, 
+            memcpy((void*)(block->data + block->size), 
                 (const void*)data, BLOCK_SZ - block->size);  
             
             data += BLOCK_SZ - block->size;
@@ -47,7 +47,7 @@ int FileFsNode::write(const unsigned char * data, int size)
     
         FsBlock *block = new FsBlock;
         
-        int start_offset = (unsigned long)data + i*BLOCK_SZ;
+        unsigned long start_offset = (unsigned long)data + i*BLOCK_SZ;
         int sz_to_copy = (i==size/BLOCK_SZ)? size % BLOCK_SZ : BLOCK_SZ;
         
         std::cout << __FUNCTION__ << " : " << getSize() << " " << sz_to_copy << "\n";        
@@ -88,8 +88,8 @@ int FileFsNode::read(unsigned char *data, int offset, int count)
         else if (i==start_idx) block_read_bytes -= offset % BLOCK_SZ;
         else if (i==end_idx) block_read_bytes = (offset+count) % BLOCK_SZ;
         
-        memcpy((void*)data + write_offset, 
-            (void *)buffer[i]->data + block_offset, block_read_bytes);
+        memcpy((void*)(data + write_offset), 
+            (void *)(buffer[i]->data + block_offset), block_read_bytes);
             
         std::cout << __FUNCTION__ << " : Read " << block_read_bytes << " from block " << i << "\n";                      
             
