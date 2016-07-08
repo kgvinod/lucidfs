@@ -42,7 +42,7 @@ To clean, run :
 make clean
 ```
 
-#### output of executable
+#### Output of executable
 The executable runs a set of unit tests and shows the test results. Then it dumps the complete directory tree to stdout.
 Sample output:
 ```
