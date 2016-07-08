@@ -25,6 +25,7 @@ Supports the following operations::
 #### Requirements : 
 - Ubuntu 14.04 LTS  
 - g++ compiler with c++11 support.
+
 Can be built for other platforms, but the code is verified in the above setup only.
 
 #### Compiling and running
@@ -40,5 +41,33 @@ To clean, run :
 ```
 make clean
 ```
+
+#### Output of executable
+The executable runs a set of unit tests and shows the test results. Then it dumps the complete directory tree to stdout.
+Sample output:
+```
+-d- /
+-d- //home
+-d- //home/Documents
+-f- //home/Documents/cover_letter.doc
+-d- //home/Videos
+-f- //home/Videos/movie.mp4
+-d- //home/Pictures
+-f- //home/Pictures/sunset.jpg
+-l- //home/cover_letter->//home/Documents/cover_letter.doc
+-l- //home/user_lib->//usr/lib
+-d- //etc
+-d- //bin
+-d- //usr
+```
+Notes:
+```
+-d- : directory
+-f- : file
+-l- : link
+```
+Note that the link nodes points to the linked node using "->" 
+
+The test sets the root directory as "/", which appears as the first "/" in each line of the tree dump.
 
 ### Assumptions and design choices
