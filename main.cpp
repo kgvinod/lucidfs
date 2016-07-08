@@ -1,3 +1,13 @@
+/**
+ * @file   main.cpp
+ * @Author Vinod Gopalan (kgvinod@gmail.com)
+ * @date   July, 2016
+ * @brief  Test / demo application for lucidfs
+ *
+ * A simple filesystem to demonstrate use of C++ to create an object oriented
+ * file system
+ */
+
 #include "lucidfs.h"
 #include "fsnode.h"
 #include "dirfsnode.h"
@@ -7,9 +17,9 @@
 void verify_result(FsNode *node, std::string name)
 {
     if ((node != nullptr) && (node->getName() == name))
-        std::cout << "** " << name << " creation test passed \n";
+        std::cout << name << " node creation test : PASS \n";
     else
-        std::cout << "!! " << name << " creation test failed \n"; 
+        std::cout << name << " node creation test : FAIL \n"; 
 }
 
 int main() 
@@ -17,6 +27,9 @@ int main()
 
     // Create filesystem with "/" as the root node
     LucidFS* lfs = new LucidFS();
+    
+    std::cout << "\nRun Tests : \n\n"; 
+        
     std::string node_name = "/";
     DirFsNode* root_dir = lfs->init(node_name);
     verify_result(root_dir, node_name);       
@@ -46,23 +59,38 @@ int main()
     DirFsNode* pic_dir = home_dir->mkdir(node_name = "Pictures"); 
     verify_result(pic_dir, node_name);           
     
-    DirFsNode* usr_loc_dir = usr_dir->mkdir("local");
-    DirFsNode* usr_lib_dir = usr_dir->mkdir("lib");       
-    DirFsNode* usr_bin_dir = usr_dir->mkdir("bin");  
+    DirFsNode* usr_loc_dir = usr_dir->mkdir(node_name = "local");
+    verify_result(usr_loc_dir, node_name);   
+            
+    DirFsNode* usr_lib_dir = usr_dir->mkdir(node_name = "lib");   
+    verify_result(usr_lib_dir, node_name);       
+    
+    DirFsNode* usr_bin_dir = usr_dir->mkdir(node_name = "bin");  
+    verify_result(usr_bin_dir, node_name);       
     
     // File tests   
-    FileFsNode* file1 = doc_dir->fopen("cover_letter.doc");
-    FileFsNode* file2 = pic_dir->fopen("sunset.jpg");
-    FileFsNode* file3 = vid_dir->fopen("movie.mp4");
+    FileFsNode* file1 = doc_dir->fopen(node_name = "cover_letter.doc");
+    verify_result(file1, node_name);       
+        
+    FileFsNode* file2 = pic_dir->fopen(node_name = "sunset.jpg");
+    verify_result(file2, node_name);       
+        
+    FileFsNode* file3 = vid_dir->fopen(node_name = "movie.mp4");
+    verify_result(file3, node_name);           
     
     // Duplicate node test
-    FileFsNode* file4 = doc_dir->fopen("cover_letter.doc");
-    if (file4 == nullptr) std::cout << "duplicate node test passed \n";
+    DirFsNode* tmpDir = home_dir->mkdir(node_name = "Documents");
+    std::cout << "Duplicate node test : " << ((tmpDir == nullptr)? "PASS" : "FAIL") << "\n";
+        
     
     // Link tests
-    LnkFsNode* lnk1 = home_dir->mklnk("cover_letter", file1);  
-    LnkFsNode* lnk2 = home_dir->mklnk("user_lib", usr_lib_dir);        
-     
+    LnkFsNode* lnk1 = home_dir->mklnk(node_name = "cover_letter", file1);  
+    verify_result(lnk1, node_name);           
+        
+    LnkFsNode* lnk2 = home_dir->mklnk(node_name = "user_lib", usr_lib_dir);        
+    verify_result(lnk2, node_name);           
+        
+    std::cout << "\nDirectory Tree Dump : \n\n"; 
     root_dir->printNodes();
 
     return 0;

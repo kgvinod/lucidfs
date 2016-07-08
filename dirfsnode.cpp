@@ -17,7 +17,7 @@ DirFsNode* DirFsNode::mkdir(std::string node_name)
 {
     // Check if a node exists with the same name
     if (isNodeExist(node_name)) {
-        std::cout << node_name << " already exists ! \n";
+        std::cout << __FUNCTION__ << " : " << node_name << " node already exists ! \n";
         return nullptr;
     }
      
@@ -33,7 +33,7 @@ FileFsNode* DirFsNode::fopen(std::string node_name)
 {
     // Check if a node exists with the same name
     if (isNodeExist(node_name)) {
-        std::cout << node_name << " already exists ! \n";
+        std::cout << __FUNCTION__ << " : " << node_name << " node already exists ! \n";
         return nullptr;
     }
      
@@ -49,7 +49,7 @@ LnkFsNode* DirFsNode::mklnk(std::string node_name, FsNode *lnk)
 {
     // Check if a node exists with the same name
     if (isNodeExist(node_name)) {
-        std::cout << node_name << " already exists ! \n";
+        std::cout << __FUNCTION__ << " : " << node_name << " node already exists ! \n";
         return nullptr;
     }
      
@@ -60,12 +60,11 @@ LnkFsNode* DirFsNode::mklnk(std::string node_name, FsNode *lnk)
     return dnode;
 }     
 
-bool mybool(int i) {return true;}
      
 // Check if node already exists
 bool DirFsNode::isNodeExist(std::string node_name)
 {
-        
+    // Search for the node name in the directory node    
     auto it = std::find_if (nodeList.begin(), 
         nodeList.end(), [=](FsNode *node) { return (node->getName() == node_name);});        
     
@@ -75,7 +74,6 @@ bool DirFsNode::isNodeExist(std::string node_name)
 // Debug function to print all nodes recursively
 void DirFsNode::printNodes()
 {
-
     std::string pstr;
     
     // Print name of this node
