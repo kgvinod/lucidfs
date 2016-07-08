@@ -34,7 +34,9 @@ FileFsNode* DirFsNode::fopen(std::string node_name)
     // Check if a node exists with the same name
     if (isNodeExist(node_name)) {
         std::cout << __FUNCTION__ << " : " << node_name << " node already exists ! \n";
-        return nullptr;
+        
+        // Return the node is it is a file node. Else return null.
+        return dynamic_cast<FileFsNode *>(getNode(node_name));
     }
      
     FileFsNode *dnode = new FileFsNode(node_name);
@@ -71,6 +73,16 @@ bool DirFsNode::isNodeExist(std::string node_name)
     return (it != nodeList.end());
 }   
 
+// Check if node already exists
+FsNode* DirFsNode::getNode(std::string node_name)
+{
+    // Search for the node name in the directory node    
+    auto it = std::find_if (nodeList.begin(), 
+        nodeList.end(), [=](FsNode *node) { return (node->getName() == node_name);});        
+    
+    return (it != nodeList.end())? *it : nullptr;
+} 
+
 // Debug function to print all nodes recursively
 void DirFsNode::printNodes()
 {
@@ -85,6 +97,7 @@ void DirFsNode::printNodes()
     }
 }
 
+// Get the next adjacent child node
 FsNode* DirFsNode::getNextChildNode(FsNode* _node)
 {
     std::string node_name = _node->getName();

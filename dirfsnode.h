@@ -50,8 +50,12 @@ class DirFsNode : public FsNode {
     
         // Private methods
         bool isNodeExist(std::string node_name);
+        
+        // Get a node, given the name
+        FsNode* getNode(std::string node_name);   
     
         // Private variables
+        // Vector for child nodes
         std::vector<FsNode *> nodeList;
 
 };

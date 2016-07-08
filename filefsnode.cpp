@@ -29,16 +29,18 @@ int FileFsNode::write(const unsigned char * data, int size)
     
         FsBlock *block = buffer.back();
         if (block->size < BLOCK_SZ) {
-        
-            std::cout << __FUNCTION__ << " : Filling " << (BLOCK_SZ - block->size) << " bytes \n";        
+            
+            int space_avail = BLOCK_SZ - block->size;
+            int write_sz = (size <= space_avail)? size : space_avail;
+            std::cout << __FUNCTION__ << " : Filling " << write_sz << " bytes \n";        
                 
             memcpy((void*)(block->data + block->size), 
-                (const void*)data, BLOCK_SZ - block->size);  
+                (const void*)data, write_sz);  
             
-            data += BLOCK_SZ - block->size;
-            size -= BLOCK_SZ - block->size;   
+            data += write_sz;
+            size -= write_sz;   
             
-            setSize(getSize() + BLOCK_SZ - block->size);                   
+            setSize(getSize() + write_sz);                   
         }
     }
     
@@ -84,9 +86,13 @@ int FileFsNode::read(unsigned char *data, int offset, int count)
     
         int block_offset = (i==start_idx) ? offset % BLOCK_SZ : 0;
         int block_read_bytes = BLOCK_SZ;
-        if ((i== start_idx) && (i == end_idx)) block_read_bytes = count;
-        else if (i==start_idx) block_read_bytes -= offset % BLOCK_SZ;
-        else if (i==end_idx) block_read_bytes = (offset+count) % BLOCK_SZ;
+        
+        if ((i== start_idx) && (i == end_idx)) 
+            block_read_bytes = count;
+        else if (i==start_idx) 
+            block_read_bytes -= offset % BLOCK_SZ;
+        else if (i==end_idx) 
+            block_read_bytes = (offset+count) % BLOCK_SZ;
         
         memcpy((void*)(data + write_offset), 
             (void *)(buffer[i]->data + block_offset), block_read_bytes);
@@ -96,6 +102,6 @@ int FileFsNode::read(unsigned char *data, int offset, int count)
         write_offset += block_read_bytes;
     }      
         
-    return 0;
+    return write_offset;
 
 }

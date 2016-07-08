@@ -14,14 +14,14 @@
 #include <string>
 #include <iostream>
 
-#define BLOCK_SZ 4
-
+// A storage block
+#define BLOCK_SZ 512
 struct FsBlock {
-    int read_offset;
     int size;
     char data[BLOCK_SZ];
 };
 
+// FsNode class
 class FsNode {
 
     public:

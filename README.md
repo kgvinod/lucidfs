@@ -68,6 +68,10 @@ Notes:
 ```
 Note that the link nodes points to the linked node using "->" 
 
-The test sets the root directory as "/", which appears as the first "/" in each line of the tree dump.
+The test program sets the root directory as "/", which appears as the first "/" in each line of the tree dump.
 
 ### Assumptions and design choices
+- All operations are done using the filesystem node APIs. No interactive shell yet,  but it can be added.
+- In-memory storage of blocks with nothing persisted to disk.
+- Size is only provided for file nodes that contain stored data (size calculation does not track metadata storage space) 
+

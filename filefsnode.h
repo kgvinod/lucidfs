@@ -19,15 +19,22 @@ class FileFsNode : public FsNode {
     public:
         FileFsNode(std::string _name) : FsNode{_name} {};
         ~FileFsNode();
-        int write(const unsigned char * data, int size);
+        
+        // Append data of size sz to the file 
+        int write(const unsigned char * data, int sz);
+        
+        // Read count bytes from the file starting from offset to data buffer
         int read(unsigned char *data, int offset, int count);
+        
+        // Get the type string - for debug
         std::string getTypeStr() {return "-f-";}
+        
+        // Print node recursively
         void printNodes();
         
         
     private:    
         std::vector<FsBlock *> buffer;
-        int offset;
 };
 
 #endif
