@@ -28,4 +28,17 @@ Supports the following operations::
 Can be built for other platforms, but the code is verified in the above setup only.
 
 #### Compiling and running
+Just run make from the project folder
+```
+make
+```
+The make command produces an executable `lucidfstest`. To run the executable:
+```
+./lucidfstest
+```
+To clean, run :
+```
+make clean
+```
 
+### Assumptions and design choices
