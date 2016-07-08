@@ -22,7 +22,7 @@ DirFsNode* DirFsNode::mkdir(std::string node_name)
     }
      
     DirFsNode *dnode = new DirFsNode(node_name);
-    dnode->parent = this;
+    dnode->setParent(this);
 
     nodeList.push_back(dnode);
     return dnode;
@@ -38,7 +38,7 @@ FileFsNode* DirFsNode::fopen(std::string node_name)
     }
      
     FileFsNode *dnode = new FileFsNode(node_name);
-    dnode->parent = this;
+    dnode->setParent(this);
 
     nodeList.push_back(dnode);
     return dnode;
@@ -54,7 +54,7 @@ LnkFsNode* DirFsNode::mklnk(std::string node_name, FsNode *lnk)
     }
      
     LnkFsNode *dnode = new LnkFsNode(node_name, lnk);
-    dnode->parent = this;
+    dnode->setParent(this);
 
     nodeList.push_back(dnode);
     return dnode;

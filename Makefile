@@ -27,13 +27,8 @@ OBJS = $(SRCS:.cpp=.o)
 # define the executable file 
 MAIN = lucidfstest
 
-#
-# The following part of the makefile is generic; it can be used to 
-# build any executable just by changing the definitions above and by
-# deleting dependencies appended to the file from 'make depend'
-#
 
-.PHONY: depend clean
+.PHONY: clean
 
 all:$(MAIN)
 
