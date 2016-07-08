@@ -14,19 +14,28 @@
 #include <string>
 #include <iostream>
 
+#define BLOCK_SZ 4
+
+struct FsBlock {
+    int read_offset;
+    int size;
+    char data[BLOCK_SZ];
+};
+
 class FsNode {
 
     public:
     
         // Constructor and destructor 
-        FsNode(std::string _name) : name{_name}, size{0}, parent{nullptr} {}
+        FsNode(std::string _name) : mName{_name}, mSize{0}, mpParent{nullptr} {}
         ~FsNode() {};
         
         // Get name of the node (dir name, file name of link name).
-        std::string getName() {return name;}
+        std::string getName() {return mName;}
         
-        // Get the size of the node
-        int getSize() {return size;}
+        // Get/Set the size of the node
+        int getSize() {return mSize;}
+        void setSize(int _size) {mSize = _size;}        
         
         // Print all the nodes recursively to stdout
         virtual void printNodes() = 0; 
@@ -42,14 +51,14 @@ class FsNode {
         std::string& getPath(std::string& str);
         
         // Get/Set parent node
-        FsNode *getParent() {return parent;};
-        void setParent(FsNode * _parent) {parent = _parent;};         
+        FsNode *getParent() {return mpParent;};
+        void setParent(FsNode * _parent) {mpParent = _parent;};         
     
     private:
     
-        std::string name;
-        int size;
-        FsNode *parent; 
+        std::string mName;
+        int mSize;
+        FsNode *mpParent; 
 };
 
 #endif //#ifndef FSNODE_H

@@ -12,20 +12,21 @@
 #define FILEFSNODE_H
 
 #include "fsnode.h"
+#include <vector>
 
 class FileFsNode : public FsNode {
 
     public:
         FileFsNode(std::string _name) : FsNode{_name} {};
         ~FileFsNode();
-        int write(const char * data);
-        int read(char *data, int offset, int count);
+        int write(const unsigned char * data, int size);
+        int read(unsigned char *data, int offset, int count);
         std::string getTypeStr() {return "-f-";}
         void printNodes();
         
         
     private:    
-        char * buffer;
+        std::vector<FsBlock *> buffer;
         int offset;
 };
 

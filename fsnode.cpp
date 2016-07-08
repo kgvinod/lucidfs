@@ -1,5 +1,5 @@
 /**
- * @file   fsnode.h
+ * @file   fsnode.cpp
  * @Author Vinod Gopalan (kgvinod@gmail.com)
  * @date   July, 2016
  * @brief  A file system node
@@ -13,10 +13,10 @@
 
 std::string& FsNode::getPath(std::string& str) 
 {        
-    if (parent == nullptr)
+    if (mpParent == nullptr)
         return (str = getName());
     
-    return (str = parent->getPath(str) + "/" + getName());  
+    return (str = mpParent->getPath(str) + "/" + getName());  
     
 }
 

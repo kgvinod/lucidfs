@@ -76,7 +76,14 @@ int main()
     verify_result(file2, node_name);       
         
     FileFsNode* file3 = vid_dir->fopen(node_name = "movie.mp4");
-    verify_result(file3, node_name);           
+    verify_result(file3, node_name);  
+    
+    // File write/read
+    file1->write((const unsigned char*)"0123456789", 10);    
+    file1->write((const unsigned char*)"0123456789", 10); 
+    
+    char *buffer = new char[30];
+    file1->read((unsigned char*)buffer, 50, 200);                 
     
     // Duplicate node test
     DirFsNode* tmpDir = home_dir->mkdir(node_name = "Documents");

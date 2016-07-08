@@ -11,6 +11,8 @@
 #include "filefsnode.h"
 #include <string>
 #include <iostream>
+#include <string.h>
+
 
 void FileFsNode::printNodes()
 {
@@ -20,18 +22,80 @@ void FileFsNode::printNodes()
     std::cout << getTypeStr() << " " << getPath(pstr) << "\n";
 }
 
-int write(const char * data)
+int FileFsNode::write(const unsigned char * data, int size)
 {
-
-    return 0;
-
-
+    // First fill any remaining space in the last block
+    if (!buffer.empty()) {
+    
+        FsBlock *block = buffer.back();
+        if (block->size < BLOCK_SZ) {
+        
+            std::cout << __FUNCTION__ << " : Filling " << (BLOCK_SZ - block->size) << " bytes \n";        
+                
+            memcpy((void*)block->data + block->size, 
+                (const void*)data, BLOCK_SZ - block->size);  
+            
+            data += BLOCK_SZ - block->size;
+            size -= BLOCK_SZ - block->size;   
+            
+            setSize(getSize() + BLOCK_SZ - block->size);                   
+        }
+    }
+    
+    // Create and fill new blocks
+    for (int i=0; i<size/BLOCK_SZ + 1; i++) {
+    
+        FsBlock *block = new FsBlock;
+        
+        int start_offset = (unsigned long)data + i*BLOCK_SZ;
+        int sz_to_copy = (i==size/BLOCK_SZ)? size % BLOCK_SZ : BLOCK_SZ;
+        
+        std::cout << __FUNCTION__ << " : " << getSize() << " " << sz_to_copy << "\n";        
+        
+        memcpy((void*)block->data, (const void*)start_offset, sz_to_copy);
+        
+        block->size = sz_to_copy;
+        buffer.push_back(block); 
+        
+        setSize(getSize() + sz_to_copy);                   
+    }
+    
+    std::cout << __FUNCTION__ << " : Total size " << getSize() << " bytes \n";            
+    return size;
 }
 
 
-int read(char *data, int offset, int count)
+int FileFsNode::read(unsigned char *data, int offset, int count)
 {
-
+    // Error check : offset out of bounds
+    if (offset >= getSize())
+        return 0;
+        
+    // Adjust if offset+count out of bounds
+    if ((offset + count) >= getSize())
+        count = getSize() - offset;      
+      
+    // Find the starting/ending blocks
+    int start_idx = offset/BLOCK_SZ;
+    int end_idx = (offset + count)/BLOCK_SZ; 
+    
+    int write_offset = 0;
+    for (int i=start_idx; i<=end_idx; i++) {
+    
+        int block_offset = (i==start_idx) ? offset % BLOCK_SZ : 0;
+        int block_read_bytes = BLOCK_SZ;
+        if ((i== start_idx) && (i == end_idx)) block_read_bytes = count;
+        else if (i==start_idx) block_read_bytes -= offset % BLOCK_SZ;
+        else if (i==end_idx) block_read_bytes = (offset+count) % BLOCK_SZ;
+        
+        memcpy((void*)data + write_offset, 
+            (void *)buffer[i]->data + block_offset, block_read_bytes);
+            
+        std::cout << __FUNCTION__ << " : Read " << block_read_bytes << " from block " << i << "\n";                      
+            
+        write_offset += block_read_bytes;
+    }      
+        
     return 0;
 
 }
