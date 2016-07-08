@@ -1,7 +1,9 @@
 # lucidfs
 A simple file system in C++
 
-A basic file system supporting files nodes, directory nodes and link nodes. A node has a name and size.
+### Description
+
+A basic file system supporting file nodes, directory nodes and link nodes. A node has a name and size.
 - A file is a node with a buffer which holds data
 - A directory is a node which has a collection of nodes
 - A link is a node which has a pointer to another node
@@ -18,4 +20,12 @@ Supports the following operations::
 - List all nodes in a directory to stdout recursively
 - Ability to create a root node for the filesystem
 
+### How to compile and run
+
+#### Requirements : 
+- Ubuntu 14.04 LTS  
+- g++ compiler with c++11 support.
+Can be built for other platforms, but the code is verified in the above setup only.
+
+#### Compiling and running
 
