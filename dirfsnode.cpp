@@ -84,3 +84,18 @@ void DirFsNode::printNodes()
         x->printNodes();
     }
 }
+
+FsNode* DirFsNode::getNextChildNode(FsNode* _node)
+{
+    std::string node_name = _node->getName();
+    
+    // Search for the node name in the directory node    
+    auto it = std::find_if (nodeList.begin(), 
+        nodeList.end(), [=](FsNode *node) { return (node->getName() == node_name);}); 
+        
+    if(it == nodeList.end())
+        return nullptr;
+        
+    return *std::next(it);         
+      
+}

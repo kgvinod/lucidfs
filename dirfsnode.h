@@ -33,11 +33,10 @@ class DirFsNode : public FsNode {
         LnkFsNode * mklnk(std::string new_file, FsNode *node);
         
         // Return the first node in the directory
-        FsNode * getFirstNode() {return nodeList[0];}
+        FsNode * getFirstNode() {return nodeList.empty()?nullptr:nodeList[0];}
         
-        // Given a node in a directory return the 
-        // next node in the directory
-        FsNode * getNextNode(int fd);
+        // Given a sub-node, get the next sub-node
+        FsNode* getNextChildNode(FsNode*);
         
         // Print all nodes
         void printNodes();
@@ -45,7 +44,8 @@ class DirFsNode : public FsNode {
         // Get the type of node
         std::string getTypeStr() {return "-d-";}
         
-        
+
+                
     private:    
     
         // Private methods

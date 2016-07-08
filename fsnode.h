@@ -52,7 +52,10 @@ class FsNode {
         
         // Get/Set parent node
         FsNode *getParent() {return mpParent;};
-        void setParent(FsNode * _parent) {mpParent = _parent;};         
+        void setParent(FsNode * _parent) {mpParent = _parent;};  
+        
+        // Get next node in the same parent directory
+        FsNode* getNextNode();       
     
     private:
     
