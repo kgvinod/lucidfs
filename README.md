@@ -63,8 +63,9 @@ Notes:
 ```
 -d- : directory
 -f- : file
--l- link
+-l- : link
 ```
+Note that the link nodes points to the linked node using "->" 
 The test sets the root directory as "/", which appears as the first "/" in each line of the tree dump.
 
 ### Assumptions and design choices
