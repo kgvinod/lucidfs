@@ -60,10 +60,11 @@ Sample output:
 -d- //usr
 ```
 Notes:
+```
 -d- : directory
 -f- : file
 -l- link
-
+```
 The test sets the root directory as "/", which appears as the first "/" in each line of the tree dump.
 
 ### Assumptions and design choices
